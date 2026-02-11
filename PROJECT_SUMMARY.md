@@ -1,0 +1,182 @@
+# Secure Web Application - Project Summary
+
+## What is this project?
+
+I built a **secure web application** where users can register, log in, and access different pages based on their role (regular user or admin). It's like a mini version of websites that require accounts, such as social media or admin panels.
+
+---
+
+## Main Features
+
+### 1. User Registration & Login
+- Users can create an account with email and password
+- Users can log in with their credentials
+- Passwords are securely stored (hashed, never stored as plain text)
+- Password strength meter shows if password is strong enough
+
+### 2. Role-Based Access Control
+- Two types of users: **regular users** and **admins**
+- Regular users can access the dashboard
+- Only admins can access the admin panel
+- If you try to access a page you're not allowed to see, you get redirected
+
+### 3. Security Features
+- **Password hashing**: Passwords are encrypted using bcrypt (industry standard)
+- **SQL injection protection**: Database queries use safe methods
+- **XSS protection**: User input is sanitized to prevent malicious code
+- **Session management**: Secure cookies keep you logged in
+- **Input validation**: Forms check for valid email and strong passwords
+
+### 4. User Interface
+- Clean, modern design
+- Password visibility toggle (show/hide password)
+- Error messages when something goes wrong
+- Loading states when submitting forms
+
+---
+
+## Technologies Used
+
+- **Next.js 14** - React framework for building the website
+- **MySQL** - Database to store user information
+- **bcrypt** - Library to hash passwords securely
+- **iron-session** - Library to manage secure sessions
+- **Zod** - Library to validate form inputs
+- **React** - JavaScript library for building user interfaces
+
+---
+
+## How It Works
+
+### Registration Process
+1. User fills out registration form (email, password, confirm password)
+2. System checks if password is strong enough
+3. System checks if email already exists
+4. Password gets hashed (encrypted)
+5. User account is created in database
+6. User is automatically logged in
+7. User is redirected to dashboard
+
+### Login Process
+1. User enters email and password
+2. System finds user in database
+3. System compares entered password with stored hash
+4. If correct, creates a session cookie
+5. User is redirected to dashboard
+
+### Protected Pages
+- **Dashboard** (`/dashboard`): Any logged-in user can access
+- **Admin Panel** (`/admin`): Only admins can access
+- If you're not logged in, you get redirected to login page
+- If you're not an admin but try to access admin panel, you get redirected to dashboard
+
+---
+
+## Project Structure
+
+```
+secure_web_app/
+├── app/
+│   ├── login/page.js          # Login page
+│   ├── register/page.js       # Registration page
+│   ├── dashboard/page.js      # User dashboard
+│   ├── admin/page.js          # Admin panel
+│   ├── api/                   # Backend API routes
+│   └── components/            # Reusable UI components
+├── lib/
+│   ├── auth.js                # Authentication functions
+│   ├── db.js                  # Database connection
+│   └── validation.js          # Input validation
+├── database/
+│   ├── schema.sql             # Database table structure
+│   └── seed-admin.js          # Script to create admin user
+└── middleware.js              # Route protection
+```
+
+---
+
+## Security Measures Implemented
+
+1. **Password Security**
+   - Passwords are hashed with bcrypt (12 rounds)
+   - Only password hashes are stored, never plain passwords
+   - Strong password requirements enforced
+
+2. **Session Security**
+   - Sessions are encrypted
+   - Cookies are HttpOnly (can't be accessed by JavaScript)
+   - Sessions expire after 7 days
+
+3. **SQL Injection Prevention**
+   - All database queries use parameterized queries
+   - User input is never directly inserted into SQL
+
+4. **XSS Prevention**
+   - User input is escaped before displaying
+   - Prevents malicious scripts from running
+
+5. **Route Protection**
+   - Middleware checks if user is logged in
+   - Layouts check user roles before allowing access
+
+---
+
+## Database
+
+**Users Table:**
+- `id` - Unique identifier
+- `email` - User's email (unique)
+- `password_hash` - Encrypted password
+- `role` - Either "user" or "admin"
+- `created_at` - When account was created
+
+---
+
+## What I Learned
+
+This project taught me:
+- How to build authentication systems
+- How to securely store passwords
+- How to implement role-based access control
+- How to protect against common web vulnerabilities (SQL injection, XSS)
+- How to use Next.js App Router
+- How to connect a React app to a MySQL database
+- How to validate user input
+- How to manage user sessions
+
+---
+
+## Current Status
+
+### ✅ Completed
+- User registration and login
+- Password hashing and verification
+- Role-based access control
+- Protected routes
+- Admin panel
+- Security features (SQL injection, XSS protection)
+- Password strength meter
+- Responsive UI
+
+### 🔄 Future Improvements
+- Password reset functionality
+- Email verification
+- Two-factor authentication
+- User profile editing
+- Activity logs
+
+---
+
+## How to Run
+
+1. Install dependencies: `npm install`
+2. Set up MySQL database (create database, run schema.sql)
+3. Create `.env` file with database credentials
+4. Start the app: `npm run dev`
+5. Open browser: `http://localhost:3000`
+
+---
+
+## Conclusion
+
+This project demonstrates a complete authentication system with security best practices. It shows how to build a web application that protects user data and prevents common security vulnerabilities. The app is fully functional and ready for demonstration.
